@@ -1,0 +1,38 @@
+<html>
+<head>
+	<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+	google.load("visualization", '1', {packages:['corechart']});
+	google.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var query = new google.visualization.Query(
+				'https://docs.google.com/spreadsheets/d/1eko8LIH17ZXOKfWEEQtOBr5dOWQEU-jLDxi48Qj2-Q8/edit#gid=0');
+
+		query.send(handleQueryResponse);
+	}
+
+	function handleQueryResponse(response) {
+		if (response.isError()) {
+			alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+			return;
+		}
+
+		var data = response.getDataTable();
+		console.log(data);
+		var chart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
+		chart.draw(data, { legend: { position: 'none' } });
+	}
+	</script>
+
+	<title>Data from a Spreadsheet</title>
+</head>
+
+<body style="margin:0px;">
+	<div style="background:url('http://sfsummerjobs.org/wp-content/uploads/2014/04/SummerJobs-Hero-Slider-01@2x-960x300_c.jpg') no-repeat top center;background-size:cover;height:250px;margin: 0 0 0 0; padding: 0 0 0 0;opacity:1">
+		<img src="http://sfsummerjobs.org/wp-content/uploads/2013/05/logo.png" style="margin-left:auto;margin-right:auto;padding-top:1em;display:block;-webkit-filter: drop-shadow(10px 10px 5px #222); filter: drop-shadow(10px 10px 5px #222); ">
+	</div>
+				<p style="font-family:'Montserrat',Arial,sans-serif;font-size:24px;text-align:center;color:#222;">Live Summer Jobs Pledge Tally</p>
+	<span id='columnchart'></span>
+</body>
+</html>
