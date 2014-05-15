@@ -1,13 +1,18 @@
 <html>
 <head>
+<title>Data from a Spreadsheet</title>
+</head>
+
+<body>
+<span id='chart' style="width: 100%; height: 100%; display: block;"></span>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
-google.load("visualization", '1', {packages:['corechart']});
+google.load("visualization", '1', {packages:['table','corechart']});
 google.setOnLoadCallback(drawChart);
 function drawChart() {
   var query = new google.visualization.Query(
-      'https://docs.google.com/spreadsheets/d/1eko8LIH17ZXOKfWEEQtOBr5dOWQEU-jLDxi48Qj2-Q8/edit#gid=0');
-
+      'https://docs.google.com/spreadsheets/d/1eko8LIH17ZXOKfWEEQtOBr5dOWQEU-jLDxi48Qj2-Q8/gviz/tq?gid=0&headers=1&range=A%3AB');
+  query.setQuery('SELECT A,B WHERE B > 0 ORDER BY B');
   query.send(handleQueryResponse);
 }
 
@@ -18,16 +23,13 @@ function handleQueryResponse(response) {
   }
 
   var data = response.getDataTable();
-  console.log(data);
-  var chart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
-  chart.draw(data, { legend: { position: 'none' } });
+  data.sort([{column: 1, desc: true}])
+  var view = new google.visualization.DataView(data);
+  view.setRows(view.getFilteredRows([{column: 1, minValue: 1}]));
+  var chart = new google.visualization.BarChart(document.getElementById('chart'));
+  var options = {};
+  chart.draw(view, options);
 }
 </script>
-
-<title>Data from a Spreadsheet</title>
-</head>
-
-<body>
-<span id='columnchart'></span>
 </body>
 </html>
