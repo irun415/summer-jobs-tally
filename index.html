@@ -1,48 +1,59 @@
 <html>
 <head>
-<title>Data from a Spreadsheet</title>
+<title>Mayor's Summer Jobs Challenge</title>
+<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
 
 <body>
-<span id='chart' style="width: 100%; height: 100%; display: block;"></span>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-google.load("visualization", '1', {packages:['table','corechart']});
-google.setOnLoadCallback(drawChart);
+  <div class="row">
+    <div id='jobsNo' class="col-md-12 jobsno"></div>
+  </div>
+  <div class="row">
+    <div id='chart' class="col-md-12 chart" style="height:100%; min-height: 100%;"></div>
+  </div>
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-function drawChart() {
-  var query = new google.visualization.Query(
-      'https://docs.google.com/spreadsheets/d/1eko8LIH17ZXOKfWEEQtOBr5dOWQEU-jLDxi48Qj2-Q8/gviz/tq?gid=0&headers=1&range=A%3AB');
-  query.setQuery('SELECT A,B WHERE B > 0 ORDER BY B');
-  query.setRefreshInterval(1)
-  query.send(handleQueryResponse);
-}
+  <script type="text/javascript">
+  google.load("visualization", '1', {packages:['table','corechart']});
+  google.setOnLoadCallback(drawChart);
 
-function handleQueryResponse(response) {
-  if (response.isError()) {
-    alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
-    return;
+  function drawChart() {
+    var query = new google.visualization.Query(
+        'https://docs.google.com/spreadsheets/d/1eko8LIH17ZXOKfWEEQtOBr5dOWQEU-jLDxi48Qj2-Q8/gviz/tq?gid=715717633&headers=1&range=A%3AD');
+    query.setRefreshInterval(10)
+    query.send(handleQueryResponse);
   }
 
-  var data = response.getDataTable();
-  data.sort([{column: 1, desc: true}])
-  var view = new google.visualization.DataView(data);
-  view.setRows(view.getFilteredRows([{column: 1, minValue: 1}]));
-  var chart = new google.visualization.BarChart(document.getElementById('chart'));
-  var options = {
-          title: 'Number of Jobs Pledged',
-          legend: {position: 'none'},
-          chartArea: {width: '100%', height: '90%'},
-          axisTitlesPosition: 'in',
-          hAxis: {textPosition: 'in'}, 
-          vAxis: {textPosition: 'in'},
-          animation:{
-            duration: 1000,
-            easing: 'in',
-          }
-        };
-  chart.draw(view, options);
-}
-</script>
+  function handleQueryResponse(response) {
+    if (response.isError()) {
+      alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+      return;
+    }
+
+    // Grab data from the response, this will be the full spreadsheet
+    var chartData = response.getDataTable();
+    totalJobs = chartData.getColumnLabel(3);
+    $('div#jobsNo').html(totalJobs);
+    chartData.removeColumns(2,2);
+    chartData.sort([{column: 1, desc: true}])
+    var view = new google.visualization.DataView(chartData);
+    view.setRows(view.getFilteredRows([{column: 1, minValue: 1}]));
+    var chart = new google.visualization.BarChart(document.getElementById('chart'));
+    var options = {
+            title: 'Number of Jobs Pledged',
+            legend: {position: 'none'},
+            chartArea: {width: '80%', height: '90%'},
+            animation:{
+              duration: 1000,
+              easing: 'in',
+            }
+          };
+    chart.draw(view, options);
+  }
+
+  </script>
 </body>
 </html>
