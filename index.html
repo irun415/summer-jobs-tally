@@ -23,7 +23,7 @@
   function drawChart() {
     var query = new google.visualization.Query(
         'https://docs.google.com/spreadsheets/d/1eko8LIH17ZXOKfWEEQtOBr5dOWQEU-jLDxi48Qj2-Q8/gviz/tq?gid=715717633&headers=1&range=A%3AD');
-    query.setRefreshInterval(10)
+    query.setRefreshInterval(10);
     query.send(handleQueryResponse);
   }
 
