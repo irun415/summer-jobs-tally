@@ -24,7 +24,10 @@
     </div>
     <div class="row">
       <div id='chart' class="col-sm-9 chart" style="height:calc(100% - 13em)"></div>
-      <div class="col-sm-3"></div>
+      <div id='pledge-list' class="col-sm-3">
+        <ul class="pledges">
+        </ul>
+      </div>
     </div>
   </div>
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -49,28 +52,38 @@
   }
 
   function handleQueryResponse(response) {
-    console.log('query');
     if (response.isError()) {
       alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
       return;
     }
-    console.log(firstTime)
-      // Grab data from the response, this will be the full spreadsheet
-      chartData = response.getDataTable();
-      totalJobs = chartData.getColumnLabel(4);
-      existingJobs = $('div#jobsNo').html();
-      if(firstTime || totalJobs != existingJobs) {
-        $('div#jobsNo').html(totalJobs);
-        $( "div#jobsNo" )
-          .animate({
-            fontSize: '5em'
-          }, 750)
-          .animate({
-            fontSize: '3.5em'
-          }, 500)
-          .animate({
-            fontSize: '4em'
-          }, 500)
+    $('ul.pledges').empty();
+    // Grab data from the response, this will be the full spreadsheet
+    chartData = response.getDataTable();
+    chartData.sort([{column: 2, desc: true}]);
+    var pledgeData = chartData;
+    var pledgeView = new google.visualization.DataView(pledgeData);
+    pledgeView.setRows(pledgeView.getFilteredRows([{column: 1, minValue: 1}]));
+    console.log(pledgeView.getNumberOfRows());
+    console.log(pledgeData.getNumberOfRows());
+    console.log(pledgeData.getColumnType(2));
+    for(i = 0; i < pledgeView.getNumberOfRows(); ++i) {
+      var pledge = pledgeView.getValue(i,0);
+      $('ul.pledges').append("<li class='pledge-organization'>" + pledge + "</li>")
+    }
+    totalJobs = chartData.getColumnLabel(4);
+    existingJobs = $('div#jobsNo').html();
+    if(firstTime || totalJobs != existingJobs) {
+      $('div#jobsNo').html(totalJobs);
+      $( "div#jobsNo" )
+        .animate({
+          fontSize: '5em'
+        }, 750)
+        .animate({
+          fontSize: '3.5em'
+        }, 500)
+        .animate({
+          fontSize: '4em'
+        }, 500)
       }
       chartData.removeColumns(2,2);
       chartData.sort([{column: 1, desc: true}])
