@@ -43,7 +43,7 @@
 
   function drawChart() {
     query = new google.visualization.Query(
-        'https://docs.google.com/spreadsheets/d/1eko8LIH17ZXOKfWEEQtOBr5dOWQEU-jLDxi48Qj2-Q8/gviz/tq?gid=715717633&headers=1&range=A%3AD');
+        'https://docs.google.com/spreadsheets/d/1eko8LIH17ZXOKfWEEQtOBr5dOWQEU-jLDxi48Qj2-Q8/gviz/tq?gid=715717633&headers=1&range=A%3AE');
     query.setRefreshInterval(1);
     query.send(handleQueryResponse);
   }
@@ -57,7 +57,7 @@
     console.log(firstTime)
       // Grab data from the response, this will be the full spreadsheet
       chartData = response.getDataTable();
-      totalJobs = chartData.getColumnLabel(3);
+      totalJobs = chartData.getColumnLabel(4);
       existingJobs = $('div#jobsNo').html();
       if(firstTime || totalJobs != existingJobs) {
         $('div#jobsNo').html(totalJobs);
