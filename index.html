@@ -76,6 +76,11 @@
       chartData.sort([{column: 1, desc: true}])
       view = new google.visualization.DataView(chartData);
       view.setRows(view.getFilteredRows([{column: 1, minValue: 1}]));
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" }]);
       options = {
             /*title: 'Number of Jobs Pledged',*/
             legend: {position: 'none'},
@@ -84,6 +89,7 @@
             fontName: 'Montserrat',
             chartArea: {left:180, top:0, width: '80%',height: '95%'},
             colors:['#56ADE0'],
+            vAxis: {title: 'Top Pledges'},
             animation:{
               duration: 1000,
               easing: 'out',
