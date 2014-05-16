@@ -7,8 +7,19 @@
 </head>
 
 <body>
-  <div class="row">
-    <div id='jobsNo' class="col-md-12 jobsno"></div>
+  <div class="row" style="background-color:#56ADE0;color:#fff;">
+  	<div class="col-md-2"><img src="http://sfsummerjobs.org/wp-content/uploads/2013/05/logo.png" style="margin-bottom:2.5em;margin-left:1.5em;height:10em;padding-top:1em;display:block;-webkit-filter: drop-shadow(10px 10px 5px #222); filter: drop-shadow(10px 10px 5px #222); "></div>
+    <div id='jobsNo' class="col-md-5 jobsno" style="font-family:Montserrat;text-align:left;font-size:4em;margin-top:0.3em;"></div>
+    
+    <div id='goalNo' class="col-md-5 " style="font-family:Montserrat;text-align:left;font-size:4em;margin-top:0.3em;">7,000</div>
+     <div class="col-md-10">
+			 <div id='jobsLabel' class="col-md-5" style="font-family:Montserrat;text-align:left;font-size:2em;margin-bottom:0.5em;padding-left:0em;">
+				Total Jobs Pledged
+			</div>
+			 <div id='goalLabel' class="col-md-5" style="font-family:Montserrat;text-align:left;font-size:2em;margin-bottom:0.5em;padding-left:4em">
+				Jobs Goal
+			</div>
+    </div>
   </div>
   <div class="row">
     <div id='chart' class="col-md-12 chart" style="height:100%; min-height: 100%;"></div>
@@ -43,14 +54,18 @@
     view.setRows(view.getFilteredRows([{column: 1, minValue: 1}]));
     var chart = new google.visualization.BarChart(document.getElementById('chart'));
     var options = {
-            title: 'Number of Jobs Pledged',
+            /*title: 'Number of Jobs Pledged',*/
             legend: {position: 'none'},
-            chartArea: {width: '80%', height: '90%'},
+            hAxis: {baselineColor:'#fff'},
+            /*hAxis.gridlines: {color:'#fff'},*/
+            fontName: 'Montserrat',
+            chartArea: {left:180, top:0, width: '80%', height: '80%'},
+            colors:['#56ADE0'],
             animation:{
               duration: 1000,
               easing: 'in',
             }
-          };
+    };
     chart.draw(view, options);
   }
 
