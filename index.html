@@ -2,29 +2,31 @@
 <head>
 <title>Mayor's Summer Jobs Challenge</title>
 <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link href="main.css">
+<link rel="stylesheet" href="main.css">
 </head>
 
 <body>
   <div style="max-height: 100%;">
     <div class="row" style="background-color:#56ADE0;color:#fff;">
     	<div class="col-md-2"><img src="http://sfsummerjobs.org/wp-content/uploads/2013/05/logo.png" style="margin-bottom:2.5em;margin-left:1.5em;height:10em;padding-top:1em;display:block;-webkit-filter: drop-shadow(10px 10px 5px #222); filter: drop-shadow(10px 10px 5px #222); "></div>
-      <div id='jobsNo' class="col-md-5 jobsno" style="font-family:Montserrat;text-align:left;font-size:4em;margin-top:0.3em;"></div>
-      
-      <div id='goalNo' class="col-md-5 " style="font-family:Montserrat;text-align:left;font-size:4em;margin-top:0.3em;">#sfsummerjobs</div>
+      <div id='jobsNo' class="col-md-7 jobsno" style="font-family:Open Sans;text-align:left;font-size:4em;margin-top:0.3em;"></div>
+      <div id='goalNo' class="col-md-3" style="font-family:Open Sans;text-align:left;font-size:2em;margin-top:2em;">
+      #sfsummerjobs</div>
        <div class="col-md-10">
-  			 <div id='jobsLabel' class="col-md-5" style="font-family:Montserrat;text-align:left;font-size:2em;margin-bottom:0.5em;padding-left:0em;">
+  			 <div id='jobsLabel' class="col-md-6" style="font-family:Open Sans;text-align:left;font-size:2em;margin-bottom:0.5em;padding-left:0em;">
   				Total Jobs Pledged
   			</div>
-  			 <div id='goalLabel' class="col-md-5" style="font-family:Montserrat;text-align:left;font-size:2em;margin-bottom:0.5em;padding-left:4em">
+  			 <div id='goalLabel' class="col-md-6" style="font-family:Open Sans;text-align:left;font-size:2em;margin-bottom:0.5em;padding-left:4em">
   			</div>
       </div>
     </div>
     <div class="row">
       <div id='chart' class="col-sm-9 chart" style="height:calc(100% - 13em)"></div>
       <div id='pledge-list' class="col-sm-3">
+        <h1 class="pledge-title">Recent Pledges</h1>
         <ul class="pledges">
         </ul>
       </div>
@@ -63,9 +65,6 @@
     var pledgeData = chartData;
     var pledgeView = new google.visualization.DataView(pledgeData);
     pledgeView.setRows(pledgeView.getFilteredRows([{column: 1, minValue: 1}]));
-    console.log(pledgeView.getNumberOfRows());
-    console.log(pledgeData.getNumberOfRows());
-    console.log(pledgeData.getColumnType(2));
     for(i = 0; i < pledgeView.getNumberOfRows(); ++i) {
       var pledge = pledgeView.getValue(i,0);
       $('ul.pledges').append("<li class='pledge-organization'>" + pledge + "</li>")
@@ -99,7 +98,7 @@
             legend: {position: 'none'},
             hAxis: {baselineColor:'#fff'},
             /*hAxis.gridlines: {color:'#fff'},*/
-            fontName: 'Montserrat',
+            fontName: 'Open Sans',
             chartArea: {left:180, top:0, width: '80%',height: '95%'},
             colors:['#56ADE0'],
             vAxis: {title: 'Top Pledges'},
