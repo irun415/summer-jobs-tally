@@ -12,7 +12,7 @@
   <div style="max-height: 100%;">
     <div class="row" style="background-color:#56ADE0;color:#fff;">
     	<div class="col-md-2"><img src="http://sfsummerjobs.org/wp-content/uploads/2013/05/logo.png" style="margin-bottom:2.5em;margin-left:1.5em;height:10em;padding-top:1em;display:block;-webkit-filter: drop-shadow(10px 10px 5px #222); filter: drop-shadow(10px 10px 5px #222); "></div>
-      <div id='jobsNo' class="col-md-7 jobsno" style="font-family:Open Sans;text-align:left;font-size:4em;margin-top:0.3em;"></div>
+      <div id='jobsNo' class="col-md-7 jobsno" style="font-family:Open Sans;text-align:left;font-size:6em;"></div>
       <div id='goalNo' class="col-md-3" style="font-family:Open Sans;text-align:left;font-size:2em;margin-top:2em;">
       #sfsummerjobs</div>
        <div class="col-md-10">
@@ -27,7 +27,9 @@
       <div id='chart' class="col-sm-9 chart" style="height:calc(100% - 13em)"></div>
       <div id='pledge-list' class="col-sm-3">
         <h1 class="pledge-title">Recent Pledges</h1>
+        <div class="pledge-container" style="height:calc(100% - 16em);overflow:scroll;">
         <ul class="pledges">
+        </div>
         </ul>
       </div>
     </div>
@@ -61,8 +63,8 @@
     $('ul.pledges').empty();
     // Grab data from the response, this will be the full spreadsheet
     chartData = response.getDataTable();
-    chartData.sort([{column: 2, desc: true}]);
     var pledgeData = chartData;
+    pledgeData.sort([{column: 2, desc: true}]);
     var pledgeView = new google.visualization.DataView(pledgeData);
     pledgeView.setRows(pledgeView.getFilteredRows([{column: 1, minValue: 1}]));
     for(i = 0; i < pledgeView.getNumberOfRows(); ++i) {
@@ -75,19 +77,24 @@
       $('div#jobsNo').html(totalJobs);
       $( "div#jobsNo" )
         .animate({
-          fontSize: '5em'
+          fontSize: '6.5em'
         }, 750)
         .animate({
-          fontSize: '3.5em'
+          fontSize: '4.5em'
         }, 500)
         .animate({
-          fontSize: '4em'
+          fontSize: '5em'
         }, 500)
       }
       chartData.removeColumns(2,2);
-      chartData.sort([{column: 1, desc: true}])
+      chartData.sort([{column: 1, desc: true}]);
       view = new google.visualization.DataView(chartData);
-      view.setRows(view.getFilteredRows([{column: 1, minValue: 1}]));
+      var filtered = view.getFilteredRows([{column: 1, minValue: 1, maxValue: 300}])
+      var max = view.getFilteredRows([{column: 1, minValue: 1}]).length
+      var min = filtered.length
+      var range = max - min;
+      view.setRows(filtered);
+      view.hideRows(13 + range, chartData.getNumberOfRows() - 1);
       view.setColumns([0, 1,
                        { calc: "stringify",
                          sourceColumn: 1,
@@ -101,7 +108,6 @@
             fontName: 'Open Sans',
             chartArea: {left:180, top:0, width: '80%',height: '95%'},
             colors:['#56ADE0'],
-            vAxis: {title: 'Top Pledges'},
             animation:{
               duration: 1000,
               easing: 'out',
