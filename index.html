@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Mayor's Summer Jobs Challenge</title>
+<title>Mayor's Youth Jobs Plus Challenge</title>
 <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 <!-- Latest compiled and minified CSS -->
@@ -9,21 +9,18 @@
 </head>
 
 <body>
-  <div style="max-height: 100%;">
-    <div class="row" style="background-color:#56ADE0;color:#fff;">
-    	<div class="col-md-2"><img src="http://sfsummerjobs.org/wp-content/uploads/2013/05/logo.png" style="margin-bottom:2.5em;margin-left:1.5em;height:10em;padding-top:1em;display:block;-webkit-filter: drop-shadow(10px 10px 5px #222); filter: drop-shadow(10px 10px 5px #222); "></div>
-      <div id='jobsNo' class="col-md-7 jobsno" style="font-family:Open Sans;text-align:left;font-size:6em;"></div>
-      <div id='goalNo' class="col-md-3" style="font-family:Open Sans;text-align:left;font-size:36px;margin-top:2em;">
-      #sfsummerjobs</div>
-       <div class="col-md-10">
-  			 <div id='jobsLabel' class="col-md-6" style="font-family:Open Sans;text-align:left;font-size:2em;margin-bottom:0.5em;padding-left:0em;">
-  				Total Jobs Pledged
-  			</div>
-  			 <div id='goalLabel' class="col-md-6" style="font-family:Open Sans;text-align:left;font-size:2em;margin-bottom:0.5em;padding-left:4em">
-  			</div>
-      </div>
+<div style="max-height: 90%;">
+  <div class="row header-style" >
+    <div class="col-md-3"><img class="yj-branding" src="images/logo-lg.png" alt="Youth Jobs Plus"></div>
+    <div id='jobsNo' class="col-md-3 jobsno"></div>
+    <div id='goalNo' class="col-md-5 yj-hashtag">#sfsummerjobs</div>
     </div>
-    <div class="row">
+    <div class="row header-band" >
+    <div class="col-md-3"></div>
+    <div id='jobsLabel' class="col-md-3"><p class="jobsLabel-style">Total Jobs Pledged</p></div>
+      <div id='goalLabel' class="col-md-5 goalLabel-style" ></div>
+    </div>
+  <div class="row">
       <div id='chart' class="col-sm-9 chart" style="height:calc(100% - 13em)"></div>
       <div id='pledge-list' class="col-sm-3">
         <h1 class="pledge-title">Recent Pledges</h1>
@@ -35,9 +32,9 @@
     </div>
   </div>
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
-  <script type="text/javascript">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script> 
+<script type="text/javascript" src="https://www.google.com/jsapi"></script> 
+<script type="text/javascript">
   google.load("visualization", '1', {packages:['table','corechart']});
   var firstTime = true;
   var chart;
@@ -77,13 +74,13 @@
       $('div#jobsNo').html(totalJobs);
       $( "div#jobsNo" )
         .animate({
-          fontSize: '6.5em'
+          fontSize: '9em'
         }, 750)
         .animate({
-          fontSize: '4.5em'
+          fontSize: '6.5em'
         }, 500)
         .animate({
-          fontSize: '5em'
+          fontSize: '7em'
         }, 500)
       }
       chartData.removeColumns(2,2);
